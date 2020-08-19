@@ -17,7 +17,7 @@ old_library='libvips.a'
 inherited_linker_flags=' -pthread'
 
 # Libraries that this one depends upon.
-dependency_libs=' -lMagickCore-6.Q16 -lpng15 -ltiff -ljpeg -lgmodule-2.0 -lexpat -lpangoft2-1.0 -lpango-1.0 -lfontconfig -lfreetype -lgsf-1 -lxml2 -lfftw3 -lgif -lrsvg-2 -lgio-2.0 -lgdk_pixbuf-2.0 -lgobject-2.0 -lglib-2.0 -lcairo -lIlmImf -lImath -lHalf -lIex -lIexMath -lIlmThread -lmatio -lhdf5 -lz -lexif'
+dependency_libs=' -lMagickCore-6.Q16 -lpng15 -ltiff -ljpeg -lgmodule-2.0 -lexpat -lpangoft2-1.0 -lpango-1.0 -lfontconfig -lfreetype -lgsf-1 -lxml2 -lfftw3 -lgif -lrsvg-2 -lgio-2.0 -lgdk_pixbuf-2.0 -lgobject-2.0 -lglib-2.0 -lcairo -lIlmImf -lImath -lHalf -lIex -lIexMath -lIlmThread -lopenslide -L/usr/local/lib /usr/local/lib/libwebpmux.la /usr/local/lib/libwebpdemux.la /usr/local/lib/libwebp.la -lmatio -lhdf5 -lz -lexif'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''

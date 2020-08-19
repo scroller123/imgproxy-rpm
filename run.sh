@@ -1,1 +1,1 @@
-docker run -it --rm -p 8080:8080 -v `pwd`/opt:/opt -v `pwd`/lib:/usr/local/lib rpmbuild_rpm bash
+docker run -it --rm -p 8080:8080 -v `pwd`/opt:/opt -v `pwd`/lib:/usr/local/lib  rpmbuild_rpm bash

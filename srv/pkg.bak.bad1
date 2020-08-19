@@ -1,0 +1,120 @@
+#!/bin/bash
+
+#set -e
+
+
+echo "Install Imgproxy for Centos7";
+
+sudo yum install redhat-lsb-core -y;
+
+cd $HOME;
+# Install and enable the EPEL RPM package on Amazon Linux 2
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y;
+
+# Install the Remi repository configuration package
+yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y;
+
+# Install the yum-utils package (for the yum-config-manager command)
+yum install yum-utils -y;
+
+echo "*********************** yum config manager";
+
+# Command to enable the repository
+yum-config-manager --enable remi;
+
+yum install build-essential pkg-config libglib2.0-dev libexpat1-dev -y;
+
+#exit;
+#yum list|grep vips
+#yum install matio -y;
+#yum install https://download-ib01.fedoraproject.org/pub/epel/7/aarch64/Packages/m/matio-1.5.3-1.el7.aarch64.rpm -y;
+
+
+#yum install https://www.rpmfind.net/linux/remi/enterprise/7/test/x86_64/vips-8.9.0~rc4-1.el7.remi.x86_64.rpm -y;
+#yum install https://rpms.southbridge.ru/rhel7/stable/x86_64/vips-8.8.1-1.el7.remi.x86_64.rpm -y;
+#yum --showduplicates list matio | expand
+#yum install vips -y;
+#yum --showduplicates list vips | expand
+#yum --showduplicates list vips-devel | expand
+#yum --showduplicates list vips-tools | expand
+#rpm -qa | grep vips
+# yum install vips-8.9.2-1.el7.remi -y;
+
+
+yum install glib2-devel -y;
+wget https://github.com/libvips/libvips/releases/download/v8.10.0/vips-8.10.0.tar.gz;
+tar -xzvf vips-8.10.0.tar.gz;
+cd vips-8.10.0;
+yum install libpng-devel;
+./configure \
+ --with-libwebp-includes=/usr/include/webp \
+ --with-libwebp-libraries=/usr/lib64;
+echo "make......";
+make;
+echo "make install......";
+sudo make install;
+echo "ldconfig";
+sudo ldconfig;
+
+
+#echo "*********************** yum install";
+# Install libvips (+ development files and command-line tools)
+#yum install vips -y;
+#echo "*********************** yum install devel";
+#yum install http://mirror.centos.org/centos/7/os/x86_64/Packages/libwebp-devel-0.3.0-7.el7.x86_64.rpm -y;
+#yum install vips-devel -y;
+#exit;
+#echo "*********************** yum install tools";
+#yum install vips-tools -y;
+
+#echo "*********************** bashrc";
+echo "cat...";
+
+sudo cat >> /etc/bashrc <<EOF
+export CGO_LDFLAGS_ALLOW="-s|-w"
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig:$PKG_CONFIG_PATH
+export PATH=/opt/imgproxy/bin/:$PATH
+EOF
+
+# fix rev0
+# export CGO_LDFLAGS_ALLOW=".*"
+export CGO_LDFLAGS_ALLOW="-s|-w"
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig/:$PKG_CONFIG_PATH
+export PATH=/opt/imgproxy/bin/:$PATH
+
+echo "Install Golang v1.11 via GVM";
+
+# fix
+yum install bison -y;
+
+bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer);
+source /root/.gvm/scripts/gvm;
+gvm install go1.4;
+gvm use go1.4 [--default];
+# fix (1.11 old)
+gvm install go1.13;
+gvm use go1.13 [--default];
+
+go version;
+
+# fix
+echo "/usr/local/lib" >> /etc/ld.so.conf.d/usrlocal.conf
+
+
+sudo mkdir -p /opt/imgproxy/bin
+sudo mkdir -p /opt/imgproxy/etc
+
+mkdir gopath
+cd gopath
+export GOPATH=`pwd`
+echo "New gopath:"
+echo $GOPATH
+echo $PWD
+echo "Start building..."
+go get -f -u github.com/DarthSim/imgproxy
+echo "Building complete"
+cp $GOPATH/bin/imgproxy /opt/imgproxy/bin/imgproxy
+echo "Binary imgproxy copy to /opt/imgproxy/bin/imgproxy: "
+ls -lah /opt/imgproxy/bin/imgproxy
+
+

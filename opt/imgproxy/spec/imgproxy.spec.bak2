@@ -1,0 +1,38 @@
+Name: imgproxy
+Version: 2.14.1
+Release: stable
+Summary: ImgProxy for centos7
+License: MIT
+URL: https://github.com/imgproxy/imgproxy/
+Source0: imgproxy
+BuildRoot: %{_tmppath}/%{name}-for-%{version}-%{release}
+Requires: libexif
+Requires: matio
+Requires: giflib
+Requires: fftw
+Requires: ImageMagick
+BuildArch: x86_64
+
+%description
+imgproxy is a fast and secure standalone server for resizing and converting remote images. The main principles of imgproxy are simplicity, speed, and security.
+
+%install
+
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
+
+%clean
+%{__rm} -rf %{buildroot}
+
+%files -n %{name}
+%defattr(-,root,root,-)
+%{_bindir}/imgproxy
+
+%files
+%defattr(-,root,root,-)
+/%{_lib}/libvips.so.42
+/%{_lib}/libwebp.so.7
+/%{_lib}/libwebpmux.so.3
+/%{_lib}/libwebpdemux.so.2
+
+

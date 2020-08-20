@@ -1,0 +1,1 @@
+docker run -it --rm -p 8081:8080 -v `pwd`/opt:/opt centos:7 bash

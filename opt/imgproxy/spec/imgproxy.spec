@@ -7,7 +7,6 @@ URL: https://github.com/imgproxy/imgproxy/
 Source0: imgproxy
 BuildRoot: %{_tmppath}/%{name}-for-%{version}-%{release}
 Requires: libexif
-Requires: matio
 Requires: giflib
 Requires: fftw
 Requires: ImageMagick
@@ -45,3 +44,8 @@ ls -lah %{buildroot}/usr/bin
 %{_libdir}/libwebp.so.7
 %{_libdir}/libwebpmux.so.3
 %{_libdir}/libwebpdemux.so.2
+%{_libdir}/libopenslide.so.0
+%{_libdir}/libhdf5.so.8
+%{_libdir}/libmatio.so.9
+%{_libdir}/libsz.so.2
+%{_libdir}/libaec.so.0

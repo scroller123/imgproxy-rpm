@@ -1,0 +1,16 @@
+[Unit]
+Description=imgproxy
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+EnvironmentFile=/etc/imgproxy/production
+ExecStart=/usr/bin/imgproxy
+ExecReload=/bin/kill -HUP $MAINPID
+KillSignal=SIGINT
+User=imgproxy
+Group=imgproxy
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

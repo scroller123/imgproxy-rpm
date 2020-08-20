@@ -1,1 +1,1 @@
-docker run -it --rm -p 8081:8080 -v `pwd`/opt:/opt centos:7 bash
+docker run -it --privileged=true --cap-add=NET_ADMIN --rm -p 8081:8080 -v `pwd`/opt:/opt centos:7 /usr/sbin/init
